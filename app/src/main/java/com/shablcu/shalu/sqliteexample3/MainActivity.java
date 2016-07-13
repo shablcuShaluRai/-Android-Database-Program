@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void getDetail(View view){
   String s1=name.getText().toString();
-        String getName=s1.substring(0, s1.indexOf(" "));
-        String getPassword=s1.substring(s1.indexOf(" ")+1);
-        String getData= databaseHelper.getData(getName,getPassword);
+        String tName=s1.substring(0, s1.indexOf(" "));
+        String tPassword=s1.substring(s1.indexOf(" ")+1);
+        String getData= databaseHelper.getData(tName, tPassword);
         Message.message(this,getData);
 
     }
