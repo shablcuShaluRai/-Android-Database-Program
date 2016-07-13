@@ -43,6 +43,26 @@ public class DatabaseAdapter {
     }
 
 
+    public String getData(String name, String password) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] column = {DatabaseHelper.UID};
+        String[] selectionArgs={name,password};
+        Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, column,
+                DatabaseHelper.NAME + " =?  AND " + DatabaseHelper.PASSWORD + " =? ", selectionArgs, null, null, null);
+        StringBuffer buffer = new StringBuffer();
+        while (cursor.moveToNext()) {
+            int index0 = cursor.getColumnIndex(DatabaseHelper.UID);
+
+            int personid = cursor.getInt(index0);
+
+            buffer.append(personid  + "\n");
+        }
+        return buffer.toString();
+
+
+    }
+
+
     static class DatabaseHelper extends SQLiteOpenHelper {
         private static final String DATABASE_NAME = "Shabalcudatabase";
         private static final String TABLE_NAME = "SHABLCUTABLE";

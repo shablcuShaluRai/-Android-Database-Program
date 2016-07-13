@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseAdapter databaseHelper;
-    EditText userName, Password;
+    EditText userName, Password,name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         userName = (EditText) findViewById(R.id.editText_username);
         Password = (EditText) findViewById(R.id.editText_password);
+        name= (EditText) findViewById(R.id.editText_name);
 
         databaseHelper = new DatabaseAdapter(this);
     }
@@ -39,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
         String data=databaseHelper.getAllData();
         Message.message(this,data);
+
+    }
+
+    public void getDetail(View view){
+  String s1=name.getText().toString();
+        String getName=s1.substring(0, s1.indexOf(" "));
+        String getPassword=s1.substring(s1.indexOf(" ")+1);
+        String getData= databaseHelper.getData(getName,getPassword);
+        Message.message(this,getData);
 
     }
 
