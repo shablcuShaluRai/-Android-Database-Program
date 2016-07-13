@@ -34,4 +34,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void viewDetail(View view){
+
+        String data=databaseHelper.getAllData();
+        Message.message(this,data);
+
+    }
+
 }

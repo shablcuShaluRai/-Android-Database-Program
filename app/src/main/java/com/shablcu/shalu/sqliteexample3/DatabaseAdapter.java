@@ -2,13 +2,11 @@ package com.shablcu.shalu.sqliteexample3;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by shalu on 12/7/16.
- */
 public class DatabaseAdapter {
     DatabaseHelper helper;
 
@@ -23,9 +21,25 @@ public class DatabaseAdapter {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.NAME, name);
         contentValues.put(DatabaseHelper.PASSWORD, password);
-        long id  = db.insert(DatabaseHelper.TABLE_NAME, null, contentValues);
+        long id = db.insert(DatabaseHelper.TABLE_NAME, null, contentValues);
         return id;
 
+    }
+
+
+    public String getAllData() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] column = {DatabaseHelper.UID, DatabaseHelper.NAME, DatabaseHelper.PASSWORD};
+        Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, column, null, null, null, null, null);
+        StringBuffer buffer = new StringBuffer();
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String Password = cursor.getString(2);
+            buffer.append(id + " " + name + " " + Password + "\n");
+        }
+        return buffer.toString();
     }
 
 
@@ -38,7 +52,7 @@ public class DatabaseAdapter {
         private static final String PASSWORD = "password";
         private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 "(" + UID + " INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                  NAME + " VARCHAR(255) , " + PASSWORD  + " VARCHAR(255) ); ";
+                NAME + " VARCHAR(255) , " + PASSWORD + " VARCHAR(255) ); ";
         private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
         private Context context;
 
